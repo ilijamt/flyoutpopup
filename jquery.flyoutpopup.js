@@ -543,7 +543,7 @@
 
         return this.each( function() {
 
-            var _plugin = "plugin_" + pluginName,
+            var _plugin = _fullPluginName,
                     data = $.data( this, _plugin ),
                     method = data ? data[options] : '';
 
