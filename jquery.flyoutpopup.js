@@ -23,12 +23,13 @@
         selector: '.popupFlyoutAbleElement',
         containerClass: 'popupFlyoutContainer',
         containerIdPrefix: 'pfl',
-        template: '<div class="<%= containerClass %>" data-id="<%= id %>" data-pflid="<%= pflId %>" id="<%= containerIdPrefix %><%= id %>" title="<%= title %>"><p><%= text %></p></div>',
+        template: '<div class="<%= containerClass %>" data-id="<%= id %>" data-pflid="<%= pflId %>" id="<%= containerIdPrefix %><%= id %>" title="<%= title %>"><div><%= text %></div></div>',
         attachElementsToTarget: true,
         attachTarget: 'body',
         attachToElement: null,
         noTitleText: 'No title',
         noTextText: 'No text',
+        multiplePopups: false,
         draggableOptions: {
             revert: true,
             opacity: 0.75,
@@ -139,23 +140,29 @@
         var id = $( event.target ).data( 'targetId' );
         var pflId = $( event.target ).data( 'pflId' );
 
-        console.log( "eventDraggableStop", id, pflId, this.flyoutElements[id] );
+        if ( !this.hasFlyoutPopup( id, pflId, true ) || this.options.multiplePopups ) {
 
-        if ( !this.hasFlyoutPopup( id, pflId, true ) ) {
+            var title = ui.helper.data( 'pflTitle' );
+            var text = ui.helper.data( 'pflTarget' );
+            var evalText = ui.helper.data( 'pflTargetEval' );
+
+            if ( evalText ) {
+                text = ui.helper[text]();
+            } else {
+                text = ui.helper.attr( text );
+            }
 
             pflId = this.generatePflId();
             $( event.target ).data( 'pflId', pflId );
 
             this.createFlyout( {
-                'id': ui.helper.data( 'targetId' ),
-                'title': ui.helper.data( 'pflTitle' ),
-                'text': ui.helper.attr( ui.helper.data( 'pflTarget' ) ),
+                'id': id,
+                'title': title,
+                'text': text,
                 'pflId': pflId
             },
             ui.offset );
 
-        } else {
-            console.warn( "eventDraggableStop", "popupAlreadyThere" );
         }
 
         pflId = null;
@@ -427,7 +434,7 @@
         },
         data );
 
-        if ( this.hasFlyoutPopup( data['id'], data['pflId'], true ) ) {
+        if ( this.hasFlyoutPopup( data['id'], data['pflId'], true ) && !this.options.multiplePopups ) {
             // we already have a popup available
             return true;
         }
@@ -436,6 +443,7 @@
         var self = this;
 
         $element.dialog( {
+            dialogClass: "alert",
             close: function( event, ui ) {
                 self.closeFlyout( data['id'], data['pflId'] );
             }
