@@ -1,7 +1,28 @@
 /**
- * jQuery plugin for creating popup flyouts
  * 
- * @author Ilija Matoski (ilijamt@gmail.com)
+ * Default text - jQuery plugin for creating popup flyouts
+ *
+ * Author: Ilija Matoski
+ *
+ * Email: ilijamt@gmail.com
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Project home:
+ *   https://github.com/ilijamt/flyoutpopup
+ *
+ * Version:  0.2.0
+ *
+ * Features:
+ *      Creates popups based on selects
+ *      Can use as temporary note view from any element in the page
+ *      Coloring based on the elements they were spawned from
+ *      Future-compliant with HTML5 spec (will work with Webkit browsers and IE9)
+ *      
+ * Usage:
+ *  See README at project homepage
+ *
  */
 
 ;
