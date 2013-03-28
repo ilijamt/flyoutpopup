@@ -9,10 +9,10 @@
     "use strict"
 
     // Create the defaults once
-    var pluginName = "flyoutPopup",
+    var pluginName = "flyoutpopup",
             defaults = {
         selector: '.popupFlyoutAbleElement',
-        templateBox: '<div><h3><%= title =></h3><p><%= text %></p></div>'
+        template: '<div><h3><%= title =></h3><p><%= text %></p></div>'
     };
 
     /**
@@ -28,7 +28,6 @@
         }, defaults, options );
         this._defaults = defaults;
         this._name = pluginName;
-        this.template = $( this.options.templateBox ).html();
         this.init();
     }
 
@@ -44,8 +43,8 @@
     /**
      * Wrapper for constructor 
      * 
-     * @param {type} options
-     * @returns {unresolved}
+     * @param {Array} options
+     * @returns {Plugin}
      */
     $.fn[pluginName] = function( options ) {
         var args = arguments;
