@@ -6,6 +6,7 @@ Creates a popup box from an element you drag so you can view it as a separate bo
 
 Demo
 ----
+http://jsfiddle.net/ilijamt/Ufdua/
 
 Requirements
 ------------
