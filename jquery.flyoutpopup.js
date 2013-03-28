@@ -5,8 +5,17 @@
  */
 
 ;
+/**
+ * 
+ * @param {jQuery} $
+ * @param {window} window
+ * @param {document} document
+ * @param {undefined} undefined
+ * 
+ * @returns undefined
+ */
 ( function( $, window, document, undefined ) {
-    "use strict"
+    "use strict";
 
     // Create the defaults once
     var pluginName = "flyoutpopup",
@@ -32,12 +41,21 @@
     }
 
     /**
-     * Initialize functino
+     * Initialize function
      *  
      * @returns {undefined}
      */
     Plugin.prototype.init = function() {
+        console.log( "init " + pluginName );
+    };
 
+    /**
+     * Initialize function
+     *  
+     * @returns {undefined}
+     */
+    Plugin.prototype.destroy = function() {
+        console.log( "destroy " + pluginName );
     };
 
     /**
@@ -50,26 +68,23 @@
         var args = arguments;
 
         return this.each( function() {
+
             var _plugin = "plugin_" + pluginName,
                     data = $.data( this, _plugin ),
                     method = data ? data[options] : '';
 
-            // Instance the plugin
             if ( !data ) {
                 $.data( this, _plugin, ( data = new Plugin( this, options ) ) );
 
-                // Tests that there's already a plugin-instance
-                // and checks that the requested public method exists
-                // performs a method passing parameters if necessary
             } else if ( data instanceof Plugin && typeof method === 'function' ) {
                 method.apply( data, Array.prototype.slice.call( args, 1 ) );
 
-                // Allow instances to be destroyed via the 'destroy' method
                 if ( options === 'destroy' ) {
                     $.data( this, _plugin, null );
+                    $.removeData( this, _plugin );
+                    _plugin = null;
                 }
 
-                // Get the error if the method does not exist or is private
             } else if ( !method || options.charAt( 0 ) === '_' ) {
                 $.error( 'Method ' + options + ' does not exist on jQuery.' + pluginName );
             }
