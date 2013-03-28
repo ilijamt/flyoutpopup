@@ -13,6 +13,7 @@ Requirements
 
 * jQuery 1.8.3
 * jQuery UI 1.9
+* underscore 1.4.4 (Optional, if present it will be used for templating, instead of the function bellow )
 
 The following function needs to be available for this plugin to work.
 Just add it to the startup script if you don't have it.
