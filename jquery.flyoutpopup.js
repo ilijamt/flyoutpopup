@@ -35,8 +35,10 @@
  * 
  * @returns undefined
  */
-( function( $, _, window, document, undefined ) {
+( function( $, window, document, undefined ) {
     "use strict";
+
+    var _ = window._;
 
     // Create the defaults once
     var pluginName = "flyoutpopup",
@@ -128,7 +130,7 @@
         if ( ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
             this.template = _.template( this.options.template );
         } else {
-            this.template = this.options.template;
+            this.template = tmpl( this.options.template );
         }
 
         if ( typeof tmpl === "undefined" && ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
@@ -471,12 +473,7 @@
             return true;
         }
 
-        if ( typeof this.template === "function" ) {
-            var $element = $( this.template( data ) );
-        } else {
-            var $element = $( tmpl( this.template, data ) );
-        }
-
+        var $element = $( this.template( data ) );
         var self = this;
 
         $element.dialog( {
@@ -602,4 +599,4 @@
         } );
     };
 
-} )( jQuery, ( typeof _ === "undefined" ? undefined : _ ), window, document );
+} )( jQuery, window, document );
