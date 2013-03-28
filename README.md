@@ -129,6 +129,8 @@ Should we be able to show multiple popups of the same item
 
 These are jQuery Draggable options, for a full list of the options see http://api.jqueryui.com/dialog/
 
+If you decide to override the __create,drag,start,stop__ functions you will need to execute their counterparts in the plugin, they are __eventDraggableCreate, eventDraggableDrag, eventDraggableStart, eventDraggableStop__, they also receive the same arguments as their counterparts __(events, ui)__.
+
 #### colors 
 
 Available colors for the plugin. Everytime a element is created, a color is used, and when all the popups for an element are deleted the color is pushed back at the end of the list.
