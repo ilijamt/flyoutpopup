@@ -39,7 +39,7 @@
                 Plugin.prototype.eventDraggableStop.call( ui.helper.data( pluginName ), event, ui );
             }
         },
-        colors: [ "silver", "gray", "white", "maroon", "red",
+        colors: [ "silver", "gray", "maroon", "red",
             "purple", "fuchsia", "green", "lime", "olive", "yellow", "navy",
             "blue", "teal", "aqua", "aliceblue", "antiquewhite", "aqua",
             "aquamarine", "azure", "beige", "bisque", "black",
