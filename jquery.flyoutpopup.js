@@ -35,7 +35,7 @@
  * 
  * @returns undefined
  */
-( function( $, window, document, undefined ) {
+( function( $, _, window, document, undefined ) {
     "use strict";
 
     // Create the defaults once
@@ -123,6 +123,17 @@
         this.dummyId = null;
         this.flyoutElements = null;
         this.pflCount = 0;
+        this.template = null;
+
+        if ( ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
+            this.template = _.template( this.options.template );
+        } else {
+            this.template = this.options.template;
+        }
+
+        if ( typeof tmpl === "undefined" && ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
+            $.error( "No templating engine detected, use underscore or tmpl" );
+        }
 
         this.elementId = $( element ).prop( 'tagName' ) + "#" + $( element ).
                 attr( 'id' );
@@ -460,7 +471,12 @@
             return true;
         }
 
-        var $element = $( tmpl( this.options.template, data ) );
+        if ( typeof this.template === "function" ) {
+            var $element = $( this.template( data ) );
+        } else {
+            var $element = $( tmpl( this.template, data ) );
+        }
+
         var self = this;
 
         $element.dialog( {
@@ -586,4 +602,4 @@
         } );
     };
 
-} )( jQuery, window, document );
+} )( jQuery, _, window, document );
