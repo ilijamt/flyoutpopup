@@ -10,8 +10,9 @@ http://jsfiddle.net/ilijamt/Ufdua/
 
 Requirements
 ------------
-jQuery 1.8.3
-jQuery UI 1.9
+
+* jQuery 1.8.3
+* jQuery UI 1.9
 
 The following function needs to be available for this plugin to work.
 Just add it to the startup script if you don't have it.
