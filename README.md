@@ -85,6 +85,7 @@ The template used to generate the popup dialogs
      title="<%= title %>">
      <div><%= text %></div>
 </div>
+```
 
 #### attachElementsToTarget
 
