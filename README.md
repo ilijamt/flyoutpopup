@@ -53,12 +53,16 @@ Just add it to the startup script if you don't have it.
 Configuration
 -------------
 
-### selector
-(Default: __.popupFlyoutAbleElement__)
+#### selector
+-------------
+(Default: __.popupFlyoutAbleElement__).
 Which elements to bind to, the elements have to be inside the parent element the one you initialized the plugin
   
-* containerClass 
-  'popupFlyoutContainer',
+#### containerClass 
+-------------------
+(Default: __.popupFlyoutContainer__).
+
+####
         containerIdPrefix: 'pfl',
         template: '<div class="<%= containerClass %>" data-id="<%= id %>" data-pflid="<%= pflId %>" id="<%= containerIdPrefix %><%= id %>" title="<%= title %>"><div><%= text %></div></div>',
         attachElementsToTarget: true,
