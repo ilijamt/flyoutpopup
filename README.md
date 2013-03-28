@@ -194,3 +194,12 @@ The title of the popup
 If this is __1__ then it will assume that __data-pfl-target__ is a method that needs to be executed to get the data for __text__ of the popup.
 
 If this is __0__, or it's not set, then it reads the data from the attributes of the HTML element, like __attr(data-pfl-target)__
+
+License
+-------
+Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+
+Contributors
+------------
+
+
