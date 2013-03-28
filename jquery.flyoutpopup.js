@@ -128,6 +128,7 @@
         this.template = null;
 
         if ( ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
+            console.log( "Using underscore as templating engine." );
             this.template = _.template( this.options.template );
         } else {
             this.template = tmpl( this.options.template );
