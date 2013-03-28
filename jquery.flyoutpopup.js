@@ -602,4 +602,4 @@
         } );
     };
 
-} )( jQuery, _, window, document );
+} )( jQuery, ( typeof _ === "undefined" ? undefined : _ ), window, document );
