@@ -53,9 +53,9 @@ Just add it to the startup script if you don't have it.
 Configuration
 -------------
 
-* selector (Default: __.popupFlyoutAbleElement__)
- 
-  Which elements to bind to, the elements have to be inside the parent element the one you initialized the plugin
+h4. selector
+(Default: __.popupFlyoutAbleElement__)
+Which elements to bind to, the elements have to be inside the parent element the one you initialized the plugin
   
 * containerClass 
   'popupFlyoutContainer',
