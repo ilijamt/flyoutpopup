@@ -128,7 +128,6 @@
         this.template = null;
 
         if ( ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
-            console.log( "Using underscore as templating engine." );
             this.template = _.template( this.options.template );
         } else {
             this.template = tmpl( this.options.template );
@@ -252,23 +251,17 @@
      * @returns {undefined}
      */
     Plugin.prototype.init = function() {
-        console.log( "init " + pluginName );
 
-        this.flyoutElements = {
-        };
-        this.dummyId = new Date().getTime();
-        this.attachToElementName = this.options.attachElementsToTarget || ( this.options.attachToElement === null ) ? this.options.attachTarget : this.attachToElement;
-        this.$attachElement = $( this.attachToElementName );
+        this.flyoutElements = {};
 
         try {
+            this.dummyId = new Date().getTime();
+            this.attachToElementName = this.options.attachElementsToTarget || ( this.options.attachToElement === null ) ? this.options.attachTarget : this.attachToElement;
+            this.$attachElement = $( this.attachToElementName );
             this.validAttachElement = ( this.$attachElement.length > 0 );
         } catch ( err ) {
             this.validAttachElement = false;
-            console.warn( err );
-        }
-
-        if ( !this.validAttachElement ) {
-            console.warn( 'Attachment element "' + this.attachToElementName + '" is not valid.' );
+            $.error( 'Attachment element "' + this.attachToElementName + '" is not valid.' + err );
         }
 
         this.updatePluginState();
@@ -504,8 +497,6 @@
      */
     Plugin.prototype.closeFlyout = function( id, pflId ) {
 
-        console.log( "closeFlyout", id, pflId );
-
         if ( typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null ) {
             return false;
         }
@@ -538,7 +529,6 @@
      * @returns {undefined}
      */
     Plugin.prototype.destroy = function() {
-        console.log( "destroy " + pluginName );
 
         // remove bindings for the plugin 
         $( this.options.selector ).each( function(
