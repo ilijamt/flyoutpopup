@@ -59,7 +59,8 @@ Configuration
 Which elements to bind to, the elements have to be inside the parent element the one you initialized the plugin
   
 #### containerClass 
--------------------
+===
+
 (Default: __.popupFlyoutContainer__).
 
 ####
