@@ -50,69 +50,143 @@ Just add it to the startup script if you don't have it.
     };
 })();
 ```
+
 Configuration
 -------------
 
 #### selector
--------------
+
 (Default: __.popupFlyoutAbleElement__).
+
 Which elements to bind to, the elements have to be inside the parent element the one you initialized the plugin
   
 #### containerClass 
-===
 
 (Default: __.popupFlyoutContainer__).
 
-####
-        containerIdPrefix: 'pfl',
-        template: '<div class="<%= containerClass %>" data-id="<%= id %>" data-pflid="<%= pflId %>" id="<%= containerIdPrefix %><%= id %>" title="<%= title %>"><div><%= text %></div></div>',
-        attachElementsToTarget: true,
-        attachTarget: 'body',
-        attachToElement: null,
-        noTitleText: 'No title',
-        noTextText: 'No text',
-        multiplePopups: false,
-        draggableOptions: {
-            revert: true,
-            opacity: 0.75,
-            create: null,
-            start: null,
-            drag: null,
-            stop: function( event, ui ) {
-                Plugin.prototype.eventDraggableStop.call( ui.helper.data( pluginName ), event, ui );
-            }
-        },
-        colors: [ "silver", "gray", "maroon", "red",
-            "purple", "fuchsia", "green", "lime", "olive", "yellow", "navy",
-            "blue", "teal", "aqua", "aliceblue", "antiquewhite", "aqua",
-            "aquamarine", "azure", "beige", "bisque", "black",
-            "blanchedalmond", "blue", "blueviolet", "brown", "burlywood",
-            "cadetblue", "chartreuse", "chocolate", "coral", "cornflowerblue",
-            "cornsilk", "crimson", "cyan", "darkblue", "darkcyan",
-            "darkgoldenrod", "darkgray", "darkgreen", "darkgrey", "darkkhaki",
-            "darkmagenta", "darkolivegreen", "darkorange", "darkorchid",
-            "darkred", "darksalmon", "darkseagreen", "darkslateblue",
-            "darkslategray", "darkslategrey", "darkturquoise", "darkviolet",
-            "deeppink", "deepskyblue", "dimgray", "dimgrey", "dodgerblue",
-            "firebrick", "floralwhite", "forestgreen", "fuchsia", "gainsboro",
-            "ghostwhite", "gold", "goldenrod", "gray", "green", "greenyellow",
-            "grey", "honeydew", "hotpink", "indianred", "indigo", "ivory",
-            "khaki", "lavender", "lavenderblush", "lawngreen", "lemonchiffon",
-            "lightblue", "lightcoral", "lightcyan", "lightgoldenrodyellow",
-            "lightgray", "lightgreen", "lightgrey", "lightpink", "lightsalmon",
-            "lightseagreen", "lightskyblue", "lightslategray",
-            "lightslategrey", "lightsteelblue", "lightyellow", "lime",
-            "limegreen", "linen", "magenta", "maroon", "mediumaquamarine",
-            "mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen",
-            "mediumslateblue", "mediumspringgreen", "mediumturquoise",
-            "mediumvioletred", "midnightblue", "mintcream", "mistyrose",
-            "moccasin", "navajowhite", "navy", "oldlace", "olive", "olivedrab",
-            "orange", "orangered", "orchid", "palegoldenrod", "palegreen",
-            "paleturquoise", "palevioletred", "papayawhip", "peachpuff",
-            "peru", "pink", "plum", "powderblue", "purple", "red", "rosybrown",
-            "royalblue", "saddlebrown", "salmon", "sandybrown", "seagreen",
-            "seashell", "sienna", "silver", "skyblue", "slateblue",
-            "slategray", "slategrey", "snow", "springgreen", "steelblue",
-            "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat",
-            "whitesmoke", "yellow", "yellowgreen" ]
-    };
+Uses this to create the template from
+
+
+#### containerIdPrefix
+
+(Default: __pfl__).
+
+The prefix assigned to the container
+
+#### template
+
+The template used to generate the popup dialogs
+
+```html
+<div class="<%= containerClass %>" 
+     data-id="<%= id %>" 
+     data-pflid="<%= pflId %>" 
+     id="<%= containerIdPrefix %><%= id %>" 
+     title="<%= title %>">
+     <div><%= text %></div>
+</div>
+
+#### attachElementsToTarget
+
+(Default: __true__)
+
+Should we attach the elements to __attachTarget__.
+
+If __attachToElement__ is __null__ it will use __attachTarget__ as the container to where it will attach the data
+
+#### attachTarget
+
+(Default: __body__)
+
+Where should we attach the new popups?
+
+#### attachToElement
+
+(Default: __null__)
+
+What element should we attach the popups to. If this is __null__ then it will use __attachTarget__ to attach the new popups
+
+#### noTitleText 
+
+(Default: __No title__)
+
+The title to show on the popup dialog if we cannot get the data from the element of if the element data is empty.
+
+#### noTextText 
+
+(Default: __No text__)
+
+The text to show if we cannot get the data from the element or if the element data is empty
+
+#### multiplePopups
+
+(Default: __false__)
+
+Should we be able to show multiple popups of the same item
+
+#### draggingOptions 
+
+These are jQuery Draggable options, for a full list of the options see http://api.jqueryui.com/dialog/
+
+#### colors 
+
+Available colors for the plugin. Everytime a element is created, a color is used, and when all the popups for an element are deleted the color is pushed back at the end of the list.
+
+The following colors are available:
+
+```javascript
+[ "silver", "gray", "maroon", "red",
+    "purple", "fuchsia", "green", "lime", "olive", "yellow", "navy",
+    "blue", "teal", "aqua", "aliceblue", "antiquewhite", "aqua",
+    "aquamarine", "azure", "beige", "bisque", "black",
+    "blanchedalmond", "blue", "blueviolet", "brown", "burlywood",
+    "cadetblue", "chartreuse", "chocolate", "coral", "cornflowerblue",
+    "cornsilk", "crimson", "cyan", "darkblue", "darkcyan",
+    "darkgoldenrod", "darkgray", "darkgreen", "darkgrey", "darkkhaki",
+    "darkmagenta", "darkolivegreen", "darkorange", "darkorchid",
+    "darkred", "darksalmon", "darkseagreen", "darkslateblue",
+    "darkslategray", "darkslategrey", "darkturquoise", "darkviolet",
+    "deeppink", "deepskyblue", "dimgray", "dimgrey", "dodgerblue",
+    "firebrick", "floralwhite", "forestgreen", "fuchsia", "gainsboro",
+    "ghostwhite", "gold", "goldenrod", "gray", "green", "greenyellow",
+    "grey", "honeydew", "hotpink", "indianred", "indigo", "ivory",
+    "khaki", "lavender", "lavenderblush", "lawngreen", "lemonchiffon",
+    "lightblue", "lightcoral", "lightcyan", "lightgoldenrodyellow",
+    "lightgray", "lightgreen", "lightgrey", "lightpink", "lightsalmon",
+    "lightseagreen", "lightskyblue", "lightslategray",
+    "lightslategrey", "lightsteelblue", "lightyellow", "lime",
+    "limegreen", "linen", "magenta", "maroon", "mediumaquamarine",
+    "mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen",
+    "mediumslateblue", "mediumspringgreen", "mediumturquoise",
+    "mediumvioletred", "midnightblue", "mintcream", "mistyrose",
+    "moccasin", "navajowhite", "navy", "oldlace", "olive", "olivedrab",
+    "orange", "orangered", "orchid", "palegoldenrod", "palegreen",
+    "paleturquoise", "palevioletred", "papayawhip", "peachpuff",
+    "peru", "pink", "plum", "powderblue", "purple", "red", "rosybrown",
+    "royalblue", "saddlebrown", "salmon", "sandybrown", "seagreen",
+    "seashell", "sienna", "silver", "skyblue", "slateblue",
+    "slategray", "slategrey", "snow", "springgreen", "steelblue",
+    "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat",
+    "whitesmoke", "yellow", "yellowgreen" ]
+```
+
+HTML Element Data
+------------------
+
+#### data-target-id
+
+To which group this popup belongs to?
+
+#### data-pfl-target 
+
+The target from where we can read the text for the popup.
+
+#### data-pfl-title
+
+The title of the popup
+
+#### data-pfl-target-eval
+
+If this is __1__ then it will assume that __data-pfl-target__ is a method that needs to be executed to get the data for __text__ of the popup.
+
+If this is __0__, or it's not set, then it reads the data from the attributes of the HTML element, like __attr(data-pfl-target)__
