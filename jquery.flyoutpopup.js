@@ -134,7 +134,7 @@
             this.template = tmpl( this.options.template );
         }
 
-        if ( typeof tmpl === "undefined" && ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
+        if ( typeof tmpl === "undefined" && ( typeof _ === "undefined" ) ) {
             $.error( "No templating engine detected, use underscore or tmpl" );
         }
 
