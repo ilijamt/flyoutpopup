@@ -35,7 +35,7 @@
  * 
  * @returns undefined
  */
-( function( $, window, document, undefined ) {
+(function($, window, document, undefined) {
     "use strict";
 
     var _ = window._;
@@ -59,11 +59,11 @@
             create: null,
             start: null,
             drag: null,
-            stop: function( event, ui ) {
-                Plugin.prototype.eventDraggableStop.call( ui.helper.data( pluginName ), event, ui );
+            stop: function(event, ui) {
+                Plugin.prototype.eventDraggableStop.call(ui.helper.data(pluginName), event, ui);
             }
         },
-        colors: [ "silver", "gray", "maroon", "red",
+        colors: ["silver", "gray", "maroon", "red",
             "purple", "fuchsia", "green", "lime", "olive", "yellow", "navy",
             "blue", "teal", "aqua", "aliceblue", "antiquewhite", "aqua",
             "aquamarine", "azure", "beige", "bisque", "black",
@@ -95,7 +95,7 @@
             "seashell", "sienna", "silver", "skyblue", "slateblue",
             "slategray", "slategrey", "snow", "springgreen", "steelblue",
             "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat",
-            "whitesmoke", "yellow", "yellowgreen" ]
+            "whitesmoke", "yellow", "yellowgreen"]
     };
 
     var _fullPluginName = "plugin_" + pluginName;
@@ -107,11 +107,11 @@
      * @param {Object} options
      * @returns {_L8.Plugin}
      */
-    function Plugin( element, options ) {
+    function Plugin(element, options) {
 
         // options
-        this.options = $.extend( {
-        }, defaults, options );
+        this.options = $.extend({
+        }, defaults, options);
 
         // plugin internal definitions
         this.element = element;
@@ -127,23 +127,23 @@
         this.pflCount = 0;
         this.template = null;
 
-        if ( ( typeof _ === "function" ) && ( typeof _.VERSION !== "undefined" ) ) {
-            this.template = _.template( this.options.template );
+        if ((typeof _ === "function") && (typeof _.VERSION !== "undefined")) {
+            this.template = _.template(this.options.template);
         } else {
-            this.template = tmpl( this.options.template );
+            this.template = tmpl(this.options.template);
         }
 
-        if ( typeof tmpl === "undefined" && ( typeof _ === "undefined" ) ) {
-            $.error( "No templating engine detected, use underscore or tmpl" );
+        if (typeof tmpl === "undefined" && (typeof _ === "undefined")) {
+            $.error("No templating engine detected, use underscore or tmpl");
         }
 
-        this.elementId = $( element ).prop( 'tagName' ) + "#" + $( element ).
-                attr( 'id' );
+        this.elementId = $(element).prop('tagName') + "#" + $(element).
+                attr('id');
 
-        if ( typeof $( element ).attr( 'class' ) !== "undefined" ) {
-            this.elementId = this.elementId + "." + $( element ).
-                    attr( 'class' ).
-                    split( " " ).join( "." );
+        if (typeof $(element).attr('class') !== "undefined") {
+            this.elementId = this.elementId + "." + $(element).
+                    attr('class').
+                    split(" ").join(".");
         }
 
         this.init();
@@ -157,7 +157,7 @@
      * 
      * @returns {undefined}
      */
-    Plugin.prototype.eventDraggableStart = function( event, ui ) {
+    Plugin.prototype.eventDraggableStart = function(event, ui) {
 
     };
 
@@ -169,37 +169,42 @@
      * 
      * @returns {undefined}
      */
-    Plugin.prototype.eventDraggableStop = function( event, ui ) {
+    Plugin.prototype.eventDraggableStop = function(event, ui) {
 
-        var id = $( event.target ).data( 'targetId' );
-        var pflId = $( event.target ).data( 'pflId' );
+        var id = $(event.target).data('targetId');
+        var pflId = $(event.target).data('pflId');
+        var data = {
+        };
 
-        if ( !this.hasFlyoutPopup( id, pflId, true ) || this.options.multiplePopups ) {
+        if (!this.hasFlyoutPopup(id, pflId, true) || this.options.multiplePopups) {
 
-            var title = ui.helper.data( 'pflTitle' );
-            var text = ui.helper.data( 'pflTarget' );
-            var evalText = ui.helper.data( 'pflTargetEval' );
+            var title = ui.helper.data('pflTitle');
+            var text = ui.helper.data('pflTarget');
+            var evalText = ui.helper.data('pflTargetEval');
 
-            if ( evalText ) {
+            if (evalText) {
                 text = ui.helper[text]();
             } else {
-                text = ui.helper.attr( text );
+                text = ui.helper.attr(text);
             }
 
             pflId = this.generatePflId();
-            $( event.target ).data( 'pflId', pflId );
+            $(event.target).data('pflId', pflId);
 
-            this.createFlyout( {
+            data = {
                 'id': id,
                 'title': title,
                 'text': text,
                 'pflId': pflId
-            },
-            ui.offset );
+            };
+
+            this.createFlyout(data, ui.offset);
 
         }
 
         pflId = null;
+        data = null;
+        id = null;
 
     };
 
@@ -211,7 +216,7 @@
      * 
      * @returns {undefined}
      */
-    Plugin.prototype.eventDraggableCreate = function( event, ui ) {
+    Plugin.prototype.eventDraggableCreate = function(event, ui) {
 
     };
 
@@ -222,7 +227,7 @@
      * @param {type} ui
      * @returns {undefined}
      */
-    Plugin.prototype.eventDraggableDrag = function( event, ui ) {
+    Plugin.prototype.eventDraggableDrag = function(event, ui) {
 
     };
 
@@ -233,11 +238,11 @@
      * 
      * @returns {String}
      */
-    Plugin.prototype.generatePflId = function( id ) {
+    Plugin.prototype.generatePflId = function(id) {
 
         this.pflCount++;
 
-        if ( typeof id === "undefined" || id === null ) {
+        if (typeof id === "undefined" || id === null) {
             return this.pflCount;
         }
 
@@ -252,16 +257,17 @@
      */
     Plugin.prototype.init = function() {
 
-        this.flyoutElements = {};
+        this.flyoutElements = {
+        };
 
         try {
             this.dummyId = new Date().getTime();
-            this.attachToElementName = this.options.attachElementsToTarget || ( this.options.attachToElement === null ) ? this.options.attachTarget : this.attachToElement;
-            this.$attachElement = $( this.attachToElementName );
-            this.validAttachElement = ( this.$attachElement.length > 0 );
-        } catch ( err ) {
+            this.attachToElementName = this.options.attachElementsToTarget || (this.options.attachToElement === null) ? this.options.attachTarget : this.attachToElement;
+            this.$attachElement = $(this.attachToElementName);
+            this.validAttachElement = (this.$attachElement.length > 0);
+        } catch (err) {
             this.validAttachElement = false;
-            $.error( 'Attachment element "' + this.attachToElementName + '" is not valid.' + err );
+            $.error('Attachment element "' + this.attachToElementName + '" is not valid.' + err);
         }
 
         this.updatePluginState();
@@ -284,17 +290,17 @@
      */
     Plugin.prototype.bindDraggable = function() {
 
-        var $elements = $( this.options.selector + ":not(.ui-draggable)" );
+        var $elements = $(this.options.selector + ":not(.ui-draggable)");
 
-        if ( $elements.length > 0 ) {
+        if ($elements.length > 0) {
 
             var elementId = this.elementId;
             var self = this;
 
-            $elements.each( function(
-                    index, element ) {
-                $( element ).data( pluginName, self );
-            } ).draggable( this.options.draggableOptions );
+            $elements.each(function(
+                    index, element) {
+                $(element).data(pluginName, self);
+            }).draggable(this.options.draggableOptions);
 
             elementId = null;
             self = null;
@@ -312,29 +318,29 @@
      * 
      * @returns {Boolean}
      */
-    Plugin.prototype.unhighlightFlyouts = function( id ) {
+    Plugin.prototype.unhighlightFlyouts = function(id) {
 
-        if ( typeof id === "undefined" || id === null ) {
+        if (typeof id === "undefined" || id === null) {
             return false;
         }
 
-        if ( typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null ) {
+        if (typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null) {
             return false;
         }
 
-        if ( !( this.flyoutElements[id].length > 0 ) ) {
+        if (!(this.flyoutElements[id].length > 0)) {
             return false;
         }
 
-        $.each( this.flyoutElements[id]['items'], function( index, element ) {
+        $.each(this.flyoutElements[id]['items'], function(index, element) {
 
-            var originalBackgroundColor = $( element ).
-                    data( 'originalBackgroundColor' );
+            var originalBackgroundColor = $(element).
+                    data('originalBackgroundColor');
 
-            $( element ).
-                    css( 'background-color', !( typeof originalBackgroundColor === "undefined" || originalBackgroundColor === null ) ? originalBackgroundColor : '' );
+            $(element).
+                    css('background-color', !(typeof originalBackgroundColor === "undefined" || originalBackgroundColor === null) ? originalBackgroundColor : '');
 
-        } );
+        });
 
         return true;
 
@@ -347,9 +353,9 @@
      * 
      * @returns {String}
      */
-    Plugin.prototype.getColor = function( id ) {
+    Plugin.prototype.getColor = function(id) {
 
-        if ( typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null ) {
+        if (typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null) {
             return false;
         }
 
@@ -364,34 +370,34 @@
      * 
      * @returns {Boolean}
      */
-    Plugin.prototype.highlightFlyouts = function( id ) {
+    Plugin.prototype.highlightFlyouts = function(id) {
 
-        if ( typeof id === "undefined" || id === null ) {
+        if (typeof id === "undefined" || id === null) {
             return false;
         }
 
-        if ( typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null ) {
+        if (typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null) {
             return false;
         }
 
-        if ( !( this.flyoutElements[id].length > 0 ) ) {
+        if (!(this.flyoutElements[id].length > 0)) {
             return false;
         }
 
         var color = this.flyoutElements[id].color;
 
-        $.each( this.flyoutElements[id]['items'], function( index, element ) {
+        $.each(this.flyoutElements[id]['items'], function(index, element) {
 
-            var originalBackgroundColor = $( element ).
-                    css( 'background-color' );
+            var originalBackgroundColor = $(element).
+                    css('background-color');
 
-            if ( !( typeof originalBackgroundColor === "undefined" || originalBackgroundColor === null ) ) {
-                $( element ).
-                        data( 'originalBackgroundColor', originalBackgroundColor );
+            if (!(typeof originalBackgroundColor === "undefined" || originalBackgroundColor === null)) {
+                $(element).
+                        data('originalBackgroundColor', originalBackgroundColor);
             }
 
-            $( element ).css( 'background-color', color );
-        } );
+            $(element).css('background-color', color);
+        });
 
         return true;
     };
@@ -405,11 +411,11 @@
      * 
      * @returns {Boolean}
      */
-    Plugin.prototype.hasFlyoutPopup = function( id, pflId, createNoneExist ) {
+    Plugin.prototype.hasFlyoutPopup = function(id, pflId, createNoneExist) {
 
         createNoneExist = typeof createNoneExist === "undefined" || createNoneExist === null ? false : createNoneExist;
 
-        if ( createNoneExist && ( typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null ) ) {
+        if (createNoneExist && (typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null)) {
             this.flyoutElements[id] = {
                 length: 0,
                 color: this.options.colors.shift(), // get the next one in line
@@ -418,11 +424,11 @@
             };
         }
 
-        if ( typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null ) {
+        if (typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null) {
             return false;
         }
 
-        return !( typeof this.flyoutElements[id]['items'][pflId] === "undefined" || this.flyoutElements[id]['items'][pflId] === null );
+        return !(typeof this.flyoutElements[id]['items'][pflId] === "undefined" || this.flyoutElements[id]['items'][pflId] === null);
     };
 
     /**
@@ -433,18 +439,20 @@
      * 
      * @returns {Boolean}
      */
-    Plugin.prototype.createFlyout = function( data, position ) {
+    Plugin.prototype.createFlyout = function(data, position) {
 
-        if ( !this.validAttachElement ) {
+        if (!this.validAttachElement) {
             return false;
         }
 
-        if ( typeof data === "undefined" || data === null ) {
+        if (typeof data === "undefined" || data === null) {
             data = {
+                id: null,
+                pflId: null
             };
         }
 
-        if ( typeof position === "undefined" || position === null ) {
+        if (typeof position === "undefined" || position === null) {
             position = {
                 top: 0,
                 left: 0
@@ -454,32 +462,31 @@
         data['id'] = typeof data['id'] === "undefined" || data['id'] === null ? this.dummyId : data['id'];
         data['pflId'] = typeof data['pflId'] === "undefined" || data['pflId'] === null ? this.generatePflId() : data['pflId'];
 
-        data = $.extend( {
+        data = $.extend({
             'containerClass': this.options.containerClass,
             'containerIdPrefix': this.options.containerIdPrefix,
             'title': this.options.noTitleText,
             'text': this.options.noTextText
-        },
-        data );
-
-        if ( this.hasFlyoutPopup( data['id'], data['pflId'], true ) && !this.options.multiplePopups ) {
+        }, data);
+        
+        if (this.hasFlyoutPopup(data['id'], data['pflId'], true) && !this.options.multiplePopups) {
             // we already have a popup available
             return true;
         }
 
-        var $element = $( this.template( data ) );
+        var $element = $(this.template(data));
         var self = this;
 
-        $element.dialog( {
+        $element.dialog({
             dialogClass: "alert",
-            close: function( event, ui ) {
-                self.closeFlyout( data['id'], data['pflId'] );
+            close: function(event, ui) {
+                self.closeFlyout(data['id'], data['pflId']);
             }
-        } );
+        });
 
-        $element.dialog( 'option', 'position', [
+        $element.dialog('option', 'position', [
             position.left, position.top
-        ] );
+        ]);
 
         this.flyoutElements[data['id']]['items'][data['pflId']] = $element;
         this.flyoutElements[data['id']].length++;
@@ -495,26 +502,26 @@
      * @param {type} pflId
      * @returns {Boolean}
      */
-    Plugin.prototype.closeFlyout = function( id, pflId ) {
+    Plugin.prototype.closeFlyout = function(id, pflId) {
 
-        if ( typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null ) {
+        if (typeof this.flyoutElements[id] === "undefined" || this.flyoutElements[id] === null) {
             return false;
         }
 
-        if ( typeof this.flyoutElements[id]['items'][pflId] === "undefined" || this.flyoutElements[id]['items'][pflId] === null ) {
+        if (typeof this.flyoutElements[id]['items'][pflId] === "undefined" || this.flyoutElements[id]['items'][pflId] === null) {
             // the element is not present 
             return false;
         }
 
-        this.flyoutElements[id]['items'][pflId].dialog( 'destroy' );
+        this.flyoutElements[id]['items'][pflId].dialog('destroy');
         this.flyoutElements[id]['items'][pflId].remove();
 
         this.flyoutElements[id]['items'][pflId] = null;
         delete this.flyoutElements[id]['items'][pflId];
         this.flyoutElements[id].length--;
 
-        if ( Object.keys( this.flyoutElements[id]['items'] ).length < 1 ) {
-            this.options.colors.push( this.flyoutElements[id].color );
+        if (Object.keys(this.flyoutElements[id]['items']).length < 1) {
+            this.options.colors.push(this.flyoutElements[id].color);
             this.flyoutElements[id] = null;
             delete this.flyoutElements[id];
         }
@@ -531,17 +538,17 @@
     Plugin.prototype.destroy = function() {
 
         // remove bindings for the plugin 
-        $( this.options.selector ).each( function(
-                index, element ) {
-            $( element ).removeData( pluginName );
-        } );
+        $(this.options.selector).each(function(
+                index, element) {
+            $(element).removeData(pluginName);
+        });
 
         // remove the bindings
-        $.each( this.flyoutElements, function( id, elements ) {
-            $.each( elements['items'], function( index, element ) {
-                $( element ).remove(); // remove it from the DOM
-            } );
-        } );
+        $.each(this.flyoutElements, function(id, elements) {
+            $.each(elements['items'], function(index, element) {
+                $(element).remove(); // remove it from the DOM
+            });
+        });
 
         this.flyoutElements = null;
         this.options = null;
@@ -563,31 +570,31 @@
      * @param {Array} options
      * @returns {Plugin}
      */
-    $.fn[pluginName] = function( options ) {
+    $.fn[pluginName] = function(options) {
         var args = arguments;
 
-        return this.each( function() {
+        return this.each(function() {
 
             var _plugin = _fullPluginName,
-                    data = $.data( this, _plugin ),
+                    data = $.data(this, _plugin),
                     method = data ? data[options] : '';
 
-            if ( !data ) {
-                $.data( this, _plugin, ( data = new Plugin( this, options ) ) );
+            if (!data) {
+                $.data(this, _plugin, (data = new Plugin(this, options)));
 
-            } else if ( data instanceof Plugin && typeof method === 'function' ) {
-                method.apply( data, Array.prototype.slice.call( args, 1 ) );
+            } else if (data instanceof Plugin && typeof method === 'function') {
+                method.apply(data, Array.prototype.slice.call(args, 1));
 
-                if ( options === 'destroy' ) {
-                    $.data( this, _plugin, null );
-                    $.removeData( this, _plugin );
+                if (options === 'destroy') {
+                    $.data(this, _plugin, null);
+                    $.removeData(this, _plugin);
                     _plugin = null;
                 }
 
-            } else if ( !method || options.charAt( 0 ) === '_' ) {
-                $.error( 'Method ' + options + ' does not exist on jQuery.' + pluginName );
+            } else if (!method || options.charAt(0) === '_') {
+                $.error('Method ' + options + ' does not exist on jQuery.' + pluginName);
             }
-        } );
+        });
     };
 
-} )( jQuery, window, document );
+})(jQuery, window, document);
